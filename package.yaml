@@ -22,9 +22,16 @@ description:         Please see the README on GitHub at <https://github.com/pepe
 dependencies:
 - base >= 4.7 && < 5
 - recursion-schemes
+- recursion-schemes-ext
+- deriving-compat
 - lens
+- bytestring
 - semigroups
 - text
+- vector
+- aeson
+- compdata
+- scientific
 
 library:
   source-dirs: src
@@ -39,6 +46,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - hskeuomorph
+    - docopt
 
 tests:
   hskeuomorph-test:

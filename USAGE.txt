@@ -1,0 +1,4 @@
+Usage:
+  hskm lint <file>
+  hskm validate <file>
+  hskm convert <from> <to>

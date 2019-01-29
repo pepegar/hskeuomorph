@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c157ba80537f2c999b6a2132086f95022bfcff16615c698ec0debf958361ecb8
+-- hash: f3e5061a50135125943a131867bae675d1c60947ce02128b1f3727dfbb7376e0
 
 name:           hskeuomorph
 version:        0.1.0.0
@@ -27,36 +27,50 @@ source-repository head
 
 library
   exposed-modules:
+      Language.Avro
       Language.UAST
-      Lib
   other-modules:
       Paths_hskeuomorph
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
-    , compdata ==0.12
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , compdata
+    , deriving-compat
     , lens
     , recursion-schemes
+    , recursion-schemes-ext
+    , scientific
     , semigroups
     , text
+    , vector
   default-language: Haskell2010
 
 executable hskeuomorph-exe
   main-is: Main.hs
   other-modules:
+      Command
       Paths_hskeuomorph
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
-    , compdata ==0.12
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , compdata
+    , deriving-compat
+    , docopt
     , hskeuomorph
     , lens
     , recursion-schemes
+    , recursion-schemes-ext
+    , scientific
     , semigroups
     , text
+    , vector
   default-language: Haskell2010
 
 test-suite hskeuomorph-test
@@ -68,11 +82,17 @@ test-suite hskeuomorph-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
-    , compdata ==0.12
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , compdata
+    , deriving-compat
     , hskeuomorph
     , lens
     , recursion-schemes
+    , recursion-schemes-ext
+    , scientific
     , semigroups
     , text
+    , vector
   default-language: Haskell2010
