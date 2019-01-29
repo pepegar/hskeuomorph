@@ -21,3 +21,9 @@ main = do
   when (args `isPresent` (command "validate")) $ do
     file <- args `getArgOrExit` (argument "file")
     C.validate file
+
+  when (args `isPresent` (command "convert")) $ do
+    file <- args `getArgOrExit` (argument "file")
+    from <- args `getArgOrExit` (argument "from")
+    to <- args `getArgOrExit` (argument "to")
+    C.convert file from to
