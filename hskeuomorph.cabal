@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f3e5061a50135125943a131867bae675d1c60947ce02128b1f3727dfbb7376e0
+-- hash: 4e8be073981a4f526b7e23559fe73954f08b8f4243f1cfcda1245daa67f7dfe8
 
 name:           hskeuomorph
 version:        0.1.0.0
@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       Language.Avro
+      Language.Protobuf
       Language.UAST
   other-modules:
       Paths_hskeuomorph

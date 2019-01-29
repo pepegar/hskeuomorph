@@ -2,12 +2,12 @@
 
 module Main where
 
-import qualified Command as C
-import Control.Monad (when)
-import Language.Avro
-import Data.Aeson
-import System.Environment (getArgs)
-import System.Console.Docopt
+import qualified Command               as C
+import           Control.Monad         (when)
+import           Data.Aeson
+import           Language.Avro
+import           System.Console.Docopt
+import           System.Environment    (getArgs)
 
 patterns :: Docopt
 patterns = [docoptFile|USAGE.txt|]

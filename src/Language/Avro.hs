@@ -1,15 +1,14 @@
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE DeriveTraversable #-}
-{-# LANGUAGE DeriveFoldable #-}
-{-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DeriveAnyClass        #-}
+{-# LANGUAGE DeriveFoldable        #-}
+{-# LANGUAGE DeriveFunctor         #-}
+{-# LANGUAGE DeriveTraversable     #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
+{-# LANGUAGE TemplateHaskell       #-}
+{-# LANGUAGE TypeOperators         #-}
 
 
 module Language.Avro (
@@ -18,22 +17,24 @@ module Language.Avro (
   AvroF(..)
   ) where
 
-import Control.Category hiding ((.))
-import qualified Data.Text as T
-import qualified Data.List.NonEmpty as NE
-import qualified Data.Vector as V
-import Data.Functor.Foldable (Fix, cata)
-import Data.Functor.Foldable.Exotic (anaM)
-import Data.Functor.Classes (Show1)
-import           Data.Aeson (FromJSON (..), ToJSON (..), object, (.!=), (.:), (.:!), (.:?), (.=))
-import qualified Data.Aeson as J
-import qualified Data.Aeson.Types as J
-import Data.Scientific as S hiding (Fixed)
-import Text.Show.Deriving
+import           Control.Category             hiding ((.))
+import           Data.Aeson                   (FromJSON (..), ToJSON (..),
+                                               object, (.!=), (.:), (.:!),
+                                               (.:?), (.=))
+import qualified Data.Aeson                   as J
+import qualified Data.Aeson.Types             as J
+import           Data.Functor.Classes         (Show1)
+import           Data.Functor.Foldable        (Fix, cata)
+import           Data.Functor.Foldable.Exotic (anaM)
+import qualified Data.List.NonEmpty           as NE
+import           Data.Scientific              as S hiding (Fixed)
+import qualified Data.Text                    as T
+import qualified Data.Vector                  as V
+import           Text.Show.Deriving
 
 data Field a = Field {
   _fieldName :: T.Text,
-  _fieldTpe :: a
+  _fieldTpe  :: a
   } deriving (Functor, Foldable, Traversable)
 
 $(deriveShow1 ''Field)
@@ -64,33 +65,33 @@ data AvroF a = Null
              | Array { _arrayItem :: a }
              | Map { _mapValues :: a }
              | Record {
-               _recordName :: T.Text,
+               _recordName      :: T.Text,
                _recordNamespace :: Maybe T.Text,
-               _recordAliases :: [T.Text],
-               _recordDoc :: Maybe T.Text ,
-               _recordOrder :: Maybe Order ,               
-               _recordFields :: [Field a]
+               _recordAliases   :: [T.Text],
+               _recordDoc       :: Maybe T.Text ,
+               _recordOrder     :: Maybe Order ,
+               _recordFields    :: [Field a]
              }
              | Enum {
-               _enumName :: T.Text,
+               _enumName      :: T.Text,
                _enumNamespace :: Maybe T.Text,
-               _enumAliases :: [T.Text],
-               _enumDoc :: Maybe T.Text,
-               _enumSymbols :: [T.Text]
+               _enumAliases   :: [T.Text],
+               _enumDoc       :: Maybe T.Text,
+               _enumSymbols   :: [T.Text]
              }
              | Union {
                options :: NE.NonEmpty a
              }
              | Fixed {
-               name :: T.Text,
+               name      :: T.Text,
                namespace :: Maybe a,
-               aliases :: [T.Text],
-               size :: Int
+               aliases   :: [T.Text],
+               size      :: Int
              }
              deriving (Functor, Foldable, Traversable)
 
 $(deriveShow1 ''AvroF)
-  
+
 
 printerAlg :: AvroF J.Value -> J.Value
 printerAlg Null = J.object [("type", "null")]
@@ -170,6 +171,6 @@ parseAvroFJSON x = case x of
                        <*> obj .:? "namespace"
                        <*> obj .:? "aliases" .!= []
                        <*> obj .: "size"
-    
+
 instance J.FromJSON (Fix AvroF) where
   parseJSON = anaM parseAvroFJSON

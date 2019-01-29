@@ -4,18 +4,18 @@ module Command (
   convert
   ) where
 
-import Data.Aeson
-import Data.Functor.Foldable
+import           Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as BL
-import Language.Avro
+import           Data.Functor.Foldable
+import           Language.Avro
 
 data Command = Lint { file :: String }
              | Validate { file :: String }
              | Convert { to :: String, from :: String }
 
 handleCommand :: Command -> IO ()
-handleCommand (Lint file) = lint file
-handleCommand (Validate file) = validate file
+handleCommand (Lint file)       = lint file
+handleCommand (Validate file)   = validate file
 handleCommand (Convert to from) = convert to from
 
 
