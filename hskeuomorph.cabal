@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4e8be073981a4f526b7e23559fe73954f08b8f4243f1cfcda1245daa67f7dfe8
+-- hash: 1d3b4e4d9a56788532f436614047c829d792e3a20f42c01870d3ca7dd684504d
 
 name:           hskeuomorph
 version:        0.1.0.0
@@ -28,7 +28,9 @@ source-repository head
 library
   exposed-modules:
       Language.Avro
+      Language.Print
       Language.Protobuf
+      Language.Trans
       Language.UAST
   other-modules:
       Paths_hskeuomorph
@@ -39,6 +41,7 @@ library
     , base >=4.7 && <5
     , bytestring
     , compdata
+    , contravariant
     , deriving-compat
     , lens
     , recursion-schemes
@@ -62,6 +65,7 @@ executable hskeuomorph-exe
     , base >=4.7 && <5
     , bytestring
     , compdata
+    , contravariant
     , deriving-compat
     , docopt
     , hskeuomorph
@@ -87,6 +91,7 @@ test-suite hskeuomorph-test
     , base >=4.7 && <5
     , bytestring
     , compdata
+    , contravariant
     , deriving-compat
     , hskeuomorph
     , lens
